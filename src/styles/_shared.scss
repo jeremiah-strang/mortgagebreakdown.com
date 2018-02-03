@@ -1,0 +1,429 @@
+$theme-color:             #ec008c;
+
+$theme-dark1:             #333;
+$theme-dark2:             lighten($theme-dark1, 5%);
+$theme-dark3:             lighten($theme-dark1, 10%);
+$theme-dark4:             lighten($theme-dark1, 15%);
+$theme-dark5:             lighten($theme-dark1, 20%);
+$theme-dark6:             lighten($theme-dark1, 25%);
+$theme-dark7:             lighten($theme-dark1, 30%);
+$theme-dark8:             lighten($theme-dark1, 35%);
+$theme-dark9:             lighten($theme-dark1, 40%);
+$theme-dark10:            lighten($theme-dark1, 45%);
+
+$gray1:                   #fafafa;
+$gray2:                   darken($gray1, 5%);
+$gray3:                   darken($gray1, 10%);
+$gray4:                   darken($gray1, 15%);
+$gray5:                   darken($gray1, 20%);
+$gray6:                   darken($gray1, 25%);
+$gray7:                   darken($gray1, 30%);
+$gray8:                   darken($gray1, 35%);
+$gray9:                   darken($gray1, 40%);
+$gray10:                  darken($gray1, 45%);
+
+$font-light:              #fff;
+
+$bg-color:                #eee;
+$border-color:            #bbb;
+$border-color-light:      #ddd;
+
+$font-stack:              'Avenir', Helvetica, Arial, sans-serif;
+$font-size:               16px;
+
+$theme-blue:              #028bdd;
+$theme-green:             #4aba73;
+$theme-red:               #d9534f;
+
+$theme-dark1:             #333;
+$theme-dark2:             lighten($theme-dark1, 5%);
+$theme-dark3:             lighten($theme-dark1, 10%);
+$theme-dark4:             lighten($theme-dark1, 15%);
+$theme-dark5:             lighten($theme-dark1, 20%);
+$theme-dark6:             lighten($theme-dark1, 25%);
+$theme-dark7:             lighten($theme-dark1, 30%);
+$theme-dark8:             lighten($theme-dark1, 35%);
+$theme-dark9:             lighten($theme-dark1, 40%);
+$theme-dark10:            lighten($theme-dark1, 45%);
+
+$gray1:                   #fafafa;
+$gray2:                   darken($gray1, 5%);
+$gray3:                   darken($gray1, 10%);
+$gray4:                   darken($gray1, 15%);
+$gray5:                   darken($gray1, 20%);
+$gray6:                   darken($gray1, 25%);
+$gray7:                   darken($gray1, 30%);
+$gray8:                   darken($gray1, 35%);
+$gray9:                   darken($gray1, 40%);
+$gray10:                  darken($gray1, 45%);
+
+$font-dark:               #333;
+$font-light:              #fff;
+
+$bg-color:                #eee;
+$border-color:            #bbb;
+$border-color-light:      #ddd;
+
+$font-stack:              'Avenir', Helvetica, Arial, sans-serif;
+$font-size:               15px;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius:  $radius;
+     -moz-border-radius:  $radius;
+          border-radius:  $radius;
+}
+
+@mixin box-shadow($box-shadow) {
+  -webkit-box-shadow: $box-shadow;
+     -moz-box-shadow: $box-shadow;
+          box-shadow: $box-shadow;
+}
+.bbox, .box {
+  position: relative;
+  box-sizing: border-box;
+}
+.no-bmp {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.pnl {
+  @extend .box;
+  @extend .no-bmp;
+
+  overflow: auto;
+}
+.hw100 {
+  height: 100%;
+  width: 100%;
+}
+.h100 {
+  height: 100%;
+}
+.w100 {
+  width: 100%;
+}
+.h50 {
+  height: 50%;
+}
+.w50 {
+  width: 50%;
+}
+
+html {
+  @extend .pnl;
+  @extend .hw100;
+
+  font-family: $font-stack;
+  font-size: $font-size;
+  color: $theme-dark1;
+}
+
+body {
+  @extend .pnl;
+  @extend .hw100;
+}
+
+blockquote,
+dd,
+dir,
+dl,
+fieldset,
+form,
+// h1, h2, h3, h4, h5, h6,
+menu,
+ol,
+ol ol,
+ol ul,
+p,
+ul,
+ul ol,
+ul ul {
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  padding: 0;
+  margin: 5px 0;
+}
+
+p, a {
+  font-size: 17px;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: darken($theme-color, 5%);
+}
+
+input[type=text],
+input[type=password],
+input[type=number],
+textarea {
+  @extend .box;
+  color: $theme-dark1;
+  font-size: $font-size;
+  padding: 4px;
+  background-color: $gray1;
+  border: 1px solid $border-color;
+  font-family: $font-stack;
+}
+
+select,
+option {
+  @extend .box;
+  color: $theme-dark1;
+  font-size: $font-size;
+  padding: 3px;
+  background-color: $gray1;
+  border: 1px solid $border-color;
+  font-family: $font-stack;
+}
+
+textarea {
+  font-family: $font-stack;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+}
+
+button, .btn, input[type=submit] {
+  @include border-radius(3px);
+
+  background-color: $gray3;
+  border: 1px solid $font-dark;
+  box-sizing: border-box;
+  color: $font-dark;
+  cursor: pointer;
+  font-size: $font-size;
+  padding: 4px 8px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    @include box-shadow(0px 0px 10px 0px rgba(0, 0, 0, 0.20));
+
+    background-color: darken($gray3, 5%);
+    border-color: darken($font-dark, 5%);
+
+    &.btn-danger {
+      background-color: lighten($theme-red, 5%);
+      border-color: darken($theme-red, 12%);
+    }
+
+    &.btn-plain {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.btn-primary {
+      background-color: $theme-blue;
+      border-color: darken($theme-blue, 20%);
+    }
+  }
+  
+  &.btn-danger {
+    background-color: $theme-red;
+    border-color: darken($theme-red, 15%);
+    color: $font-light;
+  }
+  
+  &.btn-plain {
+    background-color: transparent;
+    border: none;
+    color: $theme-dark1;
+    padding: 2px;
+  }
+
+  &.btn-primary {
+    background-color: darken($theme-blue, 5%);
+    border-color: darken($theme-blue, 15%);
+    color: $font-light;
+  }
+}
+
+ul, ol, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main, .body-content, .footer, .above-footer, .vertical-bar-wrap, .centered-wrap {
+  @extend .pnl;
+}
+
+.pad1, .vertical-bar-wrap {
+  padding: 8px 12px;
+}
+
+.pad1-lr {
+  padding: 0 12px;
+}
+
+.pad1-tb {
+  padding: 8px 0;
+}
+
+.pad2 {
+  padding: 12px 16px;
+}
+
+.w100, .main, .footer, .above-footer {
+  width: 100%;
+}
+
+.h100, .vertical-bar-wrap {
+  height: 100%;
+}
+
+.w50 {
+  width: 50%;
+}
+
+.h50 {
+  height: 50%;
+}
+
+.hw50 {
+  height: 50%;
+  width: 50%;
+}
+
+.float-left {
+  display: inline-block;
+  float: left;
+}
+
+.float-right {
+  display: inline-block;
+  float: right;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.text-center {
+  text-align: center; 
+}
+
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  opacity: 0.66;
+}
+
+.arrow.asc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid $font-dark;
+}
+
+.arrow.dsc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid $font-dark;
+}
+.view {
+  @extend .box;
+  @extend .hw100;
+
+  overflow: hidden;
+  padding: 18px 20px 24px 20px;
+}
+
+.foot {
+  @extend .w100;
+
+  box-sizing: border-box;
+  height: 18px;
+  font-size: 12px;
+  color: $theme-dark1;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding: 2px 20px 0 20px;
+
+  a {
+    font-size: inherit;
+    color: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.checkbox-wrap,
+.radio-wrap {
+  label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding: 0 6px 0 20px;
+    font-weight: normal;
+
+    &.readonly {
+      cursor: default;
+    }
+  }
+
+  input[type=radio],
+  input[type=checkbox] {
+    display: none;
+  }
+
+  label:before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .5), 0 1px 0 0 rgba(255, 255, 255, .8);
+    background-color: #cdcdcd;
+    border: 1px solid #bbb;
+  }
+}
+
+.checkbox-wrap {
+  label:before {
+    border-radius: 3px;
+  }
+
+  input[type=checkbox]:checked + label:before {
+    content: '\2713';
+    color: #f3f3f3;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .7);
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 15px;
+    border: 1px solid #bbb;
+    background-color: #999;
+  }
+}
+
+.radio-wrap {
+  label:before {
+    border-radius: 8px;
+  }
+
+  input[type=radio]:checked + label:before {
+    content: '\2022';
+    color: #f3f3f3;
+    font-size: 34px;
+    text-align: center;
+    line-height: 15px;
+    border: 1px solid #bbb;
+    background-color: #999;
+  }
+}
