@@ -60,8 +60,6 @@ exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeown
       equity += equityGained + principal
       equityGained += principal
       principal = 0
-    } else if (principal === 0) {
-      totExp = 0
     } else {
       equity += equityGained
     }
