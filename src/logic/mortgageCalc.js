@@ -19,20 +19,30 @@ exports.commaFormat = (num, fixDecimals) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeownersIns) => {
+exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeownersIns, extraPrincipal) => {
+  amt = typeof amt === 'string' ? parseFloat(amt) : amt
+  apr = typeof apr === 'string' ? parseFloat(apr) : apr
+  yrs = typeof yrs === 'string' ? parseFloat(yrs) : yrs
+  hoa = typeof hoa === 'string' ? parseFloat(hoa) : hoa
+  taxes = typeof taxes === 'string' ? parseFloat(taxes) : taxes
+  mortgageIns = typeof mortgageIns === 'string' ? parseFloat(mortgageIns) : mortgageIns
+  homeownersIns = typeof homeownersIns === 'string' ? parseFloat(homeownersIns) : homeownersIns
+  extraPrincipal = typeof extraPrincipal === 'string' ? parseFloat(extraPrincipal) : extraPrincipal
+
   let rm = convertAprToMonthly(apr)
   let n = yrs * 12
   let pmt = amt * (rm * Math.pow((1 + rm), n)) / (Math.pow((1 + rm), n) - 1)
-  let monthTot = pmt + hoa + taxes / 12 + mortgageIns + homeownersIns
+  let monthTot = pmt + hoa + taxes / 12 + mortgageIns + homeownersIns + extraPrincipal
 
   let mo = 0
   let principle = amt
   let equity = 0
 
   let rows = new Array(n)
+
   do {
     let interest = (1 + rm) * principle - principle
-    let equityGained = pmt - interest
+    let equityGained = pmt - interest + extraPrincipal
     equity += equityGained
     principle -= equityGained
 

@@ -1,6 +1,5 @@
 <template>
   <div class="breakdown">
-
     <div class="bd-inputs">
       <div class="bd-input-grp-wrap">
         <div class="bd-input-grp">
@@ -26,7 +25,7 @@
           <div class="bd-input-wrap">
             <label>Property Taxes<span>$</span></label>
             <input v-model="taxesPerYr" v-on:keyup.enter="onCalculate"
-                   v-on:focus="$event.target.select()" tabindex="5" type="number" />
+                   v-on:focus="$event.target.select()" tabindex="4" type="number" />
             <span>per year</span>
           </div>
         </div>
@@ -35,7 +34,7 @@
           <div class="bd-input-wrap">
             <label>Homeowner's Insurance<span>$</span></label>
             <input v-model="homeownersInsPerMo" v-on:keyup.enter="onCalculate"
-                   v-on:focus="$event.target.select()" tabindex="6" type="number" />
+                   v-on:focus="$event.target.select()" tabindex="5" type="number" />
             <span>per month</span>
           </div>
           <div class="bd-input-wrap">
@@ -47,7 +46,13 @@
           <div class="bd-input-wrap">
             <label>HOA Fees<span>$</span></label>
             <input v-model="hoaPerMo" v-on:keyup.enter="onCalculate"
-                   v-on:focus="$event.target.select()" tabindex="4" type="number" />
+                   v-on:focus="$event.target.select()" tabindex="7" type="number" />
+            <span>per month</span>
+          </div>
+          <div class="bd-input-wrap">
+            <label>Extra Principal<span>$</span></label>
+            <input v-model="extraPrincipal" v-on:keyup.enter="onCalculate"
+                   v-on:focus="$event.target.select()" tabindex="8" type="number" />
             <span>per month</span>
           </div>
         </div>
@@ -79,7 +84,7 @@
   import browserStorage from '../logic/browserStorage'
 
   export default {
-    name: 'breakdown',
+    name: 'Breakdown',
     data () {
       return {
         localStorageAvailable: false,
@@ -92,6 +97,7 @@
         taxesPerYr: 3000,
         mortgageInsPerMo: 0,
         homeownersInsPerMo: 200,
+        extraPrincipal: 0,
         appreciation: 0,
         appreciationStr: '0',
         columns: [
@@ -108,10 +114,10 @@
       }
     },
     watch: {
-      loanAmount: function (loanAmount) {
+      loanAmount (loanAmount) {
         this.loanAmount = Math.max(loanAmount, 0)
       },
-      loanAprStr: function (loanAprStr) {
+      loanAprStr (loanAprStr) {
         this.loanApr = parseFloat(loanAprStr)
         this.loanApr = !isNaN(this.loanApr) ? Math.max(this.loanApr, 0) : 0
         if (loanAprStr.length > 0 &&
@@ -121,22 +127,22 @@
           this.loanAprStr = this.loanApr.toString()
         }
       },
-      loanTermYrs: function (loanTermYrs) {
+      loanTermYrs (loanTermYrs) {
         this.loanTermYrs = Math.max(loanTermYrs, 0)
       },
-      hoaPerMo: function (hoaPerMo) {
+      hoaPerMo (hoaPerMo) {
         this.hoaPerMo = Math.max(hoaPerMo, 0)
       },
-      taxesPerYr: function (taxesPerYr) {
+      taxesPerYr (taxesPerYr) {
         this.taxesPerYr = Math.max(taxesPerYr, 0)
       },
-      mortgageInsPerMo: function (mortgageInsPerMo) {
+      mortgageInsPerMo (mortgageInsPerMo) {
         this.mortgageInsPerMo = Math.max(mortgageInsPerMo, 0)
       },
-      homeownersInsPerMo: function (homeownersInsPerMo) {
+      homeownersInsPerMo (homeownersInsPerMo) {
         this.homeownersInsPerMo = Math.max(homeownersInsPerMo, 0)
       },
-      appreciationStr: function (appreciationStr) {
+      appreciationStr (appreciationStr) {
         this.appreciation = parseFloat(appreciationStr)
         this.appreciation = !isNaN(this.appreciation) ? Math.max(this.appreciation, 0) : 0
         if (appreciationStr.length > 0 &&
@@ -147,7 +153,7 @@
         }
       },
     },
-    created: function () {
+    created () {
       this.localStorageAvailable = browserStorage.checkIfStorageAvailable('localStorage')
       if (this.localStorageAvailable) {
         this.rateType = localStorage.getItem('rateType', this.rateType) || this.rateType
@@ -159,13 +165,14 @@
         this.mortgageInsPerMo = localStorage.getItem('mortgageInsPerMo', this.mortgageInsPerMo) || this.mortgageInsPerMo
         this.homeownersInsPerMo = localStorage.getItem('homeownersInsPerMo', this.homeownersInsPerMo) || this.homeownersInsPerMo
         this.appreciation = localStorage.getItem('appreciation', this.appreciation) || this.appreciation
+        this.extraPrincipal = localStorage.getItem('extraPrincipal', this.extraPrincipal) || this.extraPrincipal
 
         this.loanAprStr = this.loanApr.toString()
         this.appreciationStr = this.appreciation.toString()
       }
     },
     methods: {
-      onCalculate: function () {
+      onCalculate () {
         if (this.localStorageAvailable) {
           localStorage.setItem('rateType', this.rateType)
           localStorage.setItem('loanAmount', this.loanAmount)
@@ -176,6 +183,7 @@
           localStorage.setItem('mortgageInsPerMo', this.mortgageInsPerMo)
           localStorage.setItem('homeownersInsPerMo', this.homeownersInsPerMo)
           localStorage.setItem('appreciation', this.appreciation)
+          localStorage.setItem('extraPrincipal', this.extraPrincipal)
         }
 
         this.results = calc.calcMortgageBreakdown(
@@ -186,10 +194,11 @@
           this.taxesPerYr,
           this.mortgageInsPerMo,
           this.homeownersInsPerMo,
-          this.appreciation)
+          this.appreciation,
+          this.extraPrincipal)
       },
 
-      onExportCsv: function () {
+      onExportCsv () {
         let csvData = `data:text/csv;charset=utf-8,Year,Month,Mortgage Payment,Towards Interest,Total Owed,Towards Equity,Total Equity,Monthly Cash Due`
 
         for (let row of this.results) {

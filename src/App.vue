@@ -1,14 +1,20 @@
 <template>
   <div id="app">
     <div class="app-body-wrap">
-      <router-view></router-view>
+      <!-- <router-view></router-view> -->
+      <Breakdown></Breakdown>
     </div>
   </div>
 </template>
 
 <script>
+import Breakdown from '@/components/Breakdown.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Breakdown,
+  },
 }
 </script>
 
