@@ -185,6 +185,7 @@
           localStorage.setItem('appreciation', this.appreciation)
           localStorage.setItem('extraPrincipal', this.extraPrincipal)
         }
+        console.log(this.extraPrincipal)
 
         this.results = calc.calcMortgageBreakdown(
           this.loanAmount,

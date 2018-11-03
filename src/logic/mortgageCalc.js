@@ -19,7 +19,7 @@ exports.commaFormat = (num, fixDecimals) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeownersIns, extraPrincipal) => {
+exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeownersIns, appreciation, extraPrincipal) => {
   amt = typeof amt === 'string' ? parseFloat(amt) : amt
   apr = typeof apr === 'string' ? parseFloat(apr) : apr
   yrs = typeof yrs === 'string' ? parseFloat(yrs) : yrs
@@ -27,6 +27,7 @@ exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeown
   taxes = typeof taxes === 'string' ? parseFloat(taxes) : taxes
   mortgageIns = typeof mortgageIns === 'string' ? parseFloat(mortgageIns) : mortgageIns
   homeownersIns = typeof homeownersIns === 'string' ? parseFloat(homeownersIns) : homeownersIns
+  appreciation = typeof appreciation === 'string' ? parseFloat(appreciation) : appreciation
   extraPrincipal = typeof extraPrincipal === 'string' ? parseFloat(extraPrincipal) : extraPrincipal
 
   let rm = convertAprToMonthly(apr)
@@ -35,21 +36,26 @@ exports.calcMortgageBreakdown = (amt, apr, yrs, hoa, taxes, mortgageIns, homeown
   let monthTot = pmt + hoa + taxes / 12 + mortgageIns + homeownersIns + extraPrincipal
 
   let mo = 0
-  let principle = amt
+  let principal = amt
   let equity = 0
 
   let rows = new Array(n)
 
   do {
-    let interest = (1 + rm) * principle - principle
+    let interest = (1 + rm) * principal - principal
     let equityGained = pmt - interest + extraPrincipal
-    equity += equityGained
-    principle -= equityGained
+    principal -= equityGained
+    if (principal < 0) {
+      equity += equityGained + principal
+      principal = 0
+    } else {
+      equity += equityGained
+    }
 
     let row = {
       yr: Math.floor(mo / 12) + 1,
       mo: mo % 12 + 1,
-      owe: exports.commaFormat(principle, 0),
+      owe: exports.commaFormat(principal, 0),
       equ: exports.commaFormat(equity, 0),
       pmt: exports.commaFormat(pmt, 0),
       toInt: exports.commaFormat(interest, 0),
